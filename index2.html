@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python 語法教學入門</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --panel-2: #1f2937;
+        --card: #f8fafc;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #38bdf8;
+        --accent-2: #a78bfa;
+        --success: #34d399;
+        --warning: #fbbf24;
+        --danger: #f87171;
+        --shadow: rgba(15, 23, 42, 0.25);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+        background: linear-gradient(135deg, #020817, #0f172a 40%, #111827);
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(15, 23, 42, 0.8);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px 24px;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #f8fafc;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      .hero {
+        padding: 80px 0 50px;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.3fr 0.7fr;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 1.1;
+        margin: 0 0 20px;
+      }
+
+      .gradient-text {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: 1.08rem;
+        max-width: 640px;
+      }
+
+      .hero-card,
+      .section-card,
+      .code-card {
+        background: rgba(17, 24, 39, 0.82);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        box-shadow: 0 20px 40px var(--shadow);
+        border-radius: 18px;
+      }
+
+      .hero-card {
+        padding: 28px;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        color: #dbeafe;
+        font-size: 0.9rem;
+      }
+
+      main {
+        padding-bottom: 60px;
+      }
+
+      section {
+        margin-top: 42px;
+      }
+
+      .section-title {
+        font-size: clamp(1.7rem, 2vw, 2.5rem);
+        margin-bottom: 18px;
+      }
+
+      .section-card {
+        padding: 28px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.35rem;
+      }
+
+      p, li {
+        color: #dbe2ee;
+      }
+
+      .code-card {
+        padding: 20px 18px;
+        overflow-x: auto;
+      }
+
+      pre {
+        margin: 0;
+        color: #d8f9ff;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.96rem;
+      }
+
+      .note {
+        border-left: 4px solid var(--accent);
+        background: rgba(56, 189, 248, 0.06);
+        padding: 14px 16px;
+        border-radius: 10px;
+        color: #dfeeff;
+      }
+
+      .list {
+        padding-left: 22px;
+      }
+
+      .list li + li {
+        margin-top: 10px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .mini-card {
+        background: rgba(31, 41, 55, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 16px;
+        padding: 18px;
+      }
+
+      .mini-card h4 {
+        margin: 0 0 10px;
+        font-size: 1.05rem;
+      }
+
+      .mini-card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 30px 0 50px;
+      }
+
+      @media (max-width: 840px) {
+        .hero-inner,
+        .two-col,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        nav {
+          flex-direction: column;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">Python Syntax Guide</div>
+        <div class="nav-links">
+          <a href="#basic">基礎語法</a>
+          <a href="#control">流程控制</a>
+          <a href="#function">函式</a>
+          <a href="#advance">進階概念</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <h1>Python <span class="gradient-text">語法教學</span>：從入門到實務應用</h1>
+            <p class="lead">
+              Python 是一門簡潔、易讀、適合快速開發的程式語言，廣泛應用在自動化、資料分析、AI、網站後端與工具開發中。
+              對初中階開發者來說，掌握核心語法與程式設計思維，可以顯著提升開發效率與可維護性。
+            </p>
+            <div class="tag-row">
+              <span class="tag">變數與型別</span>
+              <span class="tag">條件判斷</span>
+              <span class="tag">迴圈</span>
+              <span class="tag">函式</span>
+              <span class="tag">OOP</span>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <h3>一個簡單範例</h3>
+            <div class="code-card">
+              <pre><code>name = "Alice"
+age = 25
+
+if age &gt;= 18:
+    print(f"{name} 已成年")
+else:
+    print(f"{name} 尚未成年")</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main>
+        <section id="basic">
+          <h2 class="section-title">1. 基礎語法</h2>
+          <div class="section-card">
+            <div class="two-col">
+              <div>
+                <h3>變數與資料型別</h3>
+                <p>
+                  Python 不需要明確宣告型別，變數可以直接賦值。這使得語法更簡潔，對初學者很友善。
+                </p>
+                <ul class="list">
+                  <li>整數：<code>int</code></li>
+                  <li>浮點數：<code>float</code></li>
+                  <li>字串：<code>str</code></li>
+                  <li>布林值：<code>bool</code></li>
+                  <li>列表：<code>list</code></li>
+                  <li>字典：<code>dict</code></li>
+                </ul>
+              </div>
+
+              <div class="code-card">
+                <pre><code>age = 28
+price = 99.5
+name = "Python"
+active = True
+skills = ["Python", "SQL", "Git"]
+profile = {"name": "Alice", "age": 28}</code></pre>
+              </div>
+            </div>
+
+            <div class="note" style="margin-top: 20px;">
+              Python 的程式碼區塊使用縮排（Indentation）來表示區塊，例如 <strong>if</strong>、<strong>for</strong>、<strong>def</strong>，這點是 Python 最重要的特徵之一。
+            </div>
+          </div>
+        </section>
+
+        <section id="control">
+          <h2 class="section-title">2. 流程控制</h2>
+          <div class="section-card">
+            <div class="two-col">
+              <div>
+                <h3>條件判斷</h3>
+                <p>
+                  <strong>if</strong> 用來處理條件分支，能依據不同狀態採取不同邏輯。
+                </p>
+                <div class="code-card">
+                  <pre><code>score = 85
+
+if score &gt;= 90:
+    print("A")
+elif score &gt;= 80:
+    print("B")
+else:
+    print("C")</code></pre>
+                </div>
+              </div>
+
+              <div>
+                <h3>迴圈</h3>
+                <p>
+                  迴圈常用來重複處理資料。Python 常見的迴圈有 <strong>for</strong> 和 <strong>while</strong>。
+                </p>
+                <div class="code-card">
+                  <pre><code>for i in range(1, 5):
+    print(i)
+
+count = 0
+while count &lt; 3:
+    print(count)
+    count += 1</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="function">
+          <h2 class="section-title">3. 函式（Function）</h2>
+          <div class="section-card">
+            <div class="two-col">
+              <div>
+                <h3>函式的好處</h3>
+                <p>
+                  函式讓程式碼更模組化、可重用，能將重複邏輯抽離出來，降低維護成本。
+                </p>
+                <ul class="list">
+                  <li>名稱清楚且具語意</li>
+                  <li>減少重複程式碼</li>
+                  <li>方便測試與除錯</li>
+                  <li>提升可讀性</li>
+                </ul>
+              </div>
+
+              <div class="code-card">
+                <pre><code>def add(a, b):
+    return a + b
+
+result = add(3, 5)
+print(result)  # 8</code></pre>
+              </div>
+            </div>
+
+            <div class="note" style="margin-top: 20px;">
+              函式的參數可以有預設值，像 <code>def greet(name, message="Hello"):</code> 這種設計可讓呼叫者更靈活。
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">4. 資料結構</h2>
+          <div class="grid-3">
+            <div class="mini-card">
+              <h4>列表 List</h4>
+              <p>用來儲存有序資料，適合做陣列式處理。</p>
+              <div class="code-card" style="margin-top: 12px;">
+                <pre><code>nums = [1, 2, 3]
+nums.append(4)</code></pre>
+              </div>
+            </div>
+
+            <div class="mini-card">
+              <h4>字典 Dict</h4>
+              <p>用 key-value pairs 儲存相關資訊，常用於設定與資料表述。</p>
+              <div class="code-card" style="margin-top: 12px;">
+                <pre><code>user = {"name": "Bob", "age": 30}</n>print(user["name"])</code></pre>
+              </div>
+            </div>
+
+            <div class="mini-card">
+              <h4>元組 Tuple</h4>
+              <p>不可變資料結構，常用於固定值或避免意外修改。</p>
+              <div class="code-card" style="margin-top: 12px;">
+                <pre><code>point = (10, 20)</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="advance">
+          <h2 class="section-title">5. 進階概念</h2>
+          <div class="section-card">
+            <div class="two-col">
+              <div>
+                <h3>類別與物件</h3>
+                <p>
+                  Python 支援物件導向程式設計（OOP），可以用類別來封裝資料與行為，適合大型專案與模組化設計。
+                </p>
+                <div class="code-card">
+                  <pre><code>class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self):
+        return f"Hello, {self.name}!"
+
+p = Person("Tom")
+print(p.greet())</code></pre>
+                </div>
+              </div>
+
+              <div>
+                <h3>例外處理</h3>
+                <p>
+                  程式執行時可能出現錯誤，使用 <strong>try/except</strong> 可避免整個程式崩潰。
+                </p>
+                <div class="code-card">
+                  <pre><code>try:
+    value = int("abc")
+except ValueError:
+    print("輸入不合法")</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">6. Python 的實務建議</h2>
+          <div class="section-card">
+            <ul class="list">
+              <li><strong>保持程式碼簡潔：</strong> Python 強調可讀性，避免過度複雜的邏輯。</li>
+              <li><strong>命名要清楚：</strong> 例如使用 <code>user_name</code> 而不是 <code>u</code>。</li>
+              <li><strong>善用虛擬環境：</strong> 例如 <code>venv</code> 或 <code>conda</code>，可避免套件版本衝突。</li>
+              <li><strong>寫測試：</strong> 對核心功能使用單元測試，提升可靠性。</li>
+              <li><strong>閱讀風格指南：</strong> 遵循 PEP 8 可提升團隊協作效率。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">7. 小結</h2>
+          <div class="section-card">
+            <p>
+              Python 的優勢在於它的語法簡潔、閱讀性高，且在實務開發中能快速建立原型與工具。若你已理解變數、條件判斷、迴圈、函式與物件導向基本概念，接著就可以開始做專案練習，例如：自動化腳本、API 串接、資料清理、簡單網站後端等。
+            </p>
+            <p>
+              進階學習的下一步可以是：<strong>模組化設計</strong>、<strong>錯誤處理</strong>、<strong>資料結構與演算法</strong>、<strong>Python 套件使用</strong>、以及 <strong>Web / Data / AI</strong> 相關應用。
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <div class="footer">
+        Python 語法教學整理｜適合初中階開發者學習與複習
+      </div>
+    </div>
+  </body>
+</html>
